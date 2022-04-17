@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using Lissajous;
 using UnityEngine;
 
-public partial class TrailController : MonoBehaviour
+public class TrailController : MonoBehaviour
 {
     public TrailRenderer TrailRenderer;
 
@@ -13,7 +13,7 @@ public partial class TrailController : MonoBehaviour
 
     private float _time;
 
-    private Dictionary<LissajousParamType, float> _currentValues = new Dictionary<LissajousParamType, float>(7);
+    private Dictionary<LissajousParamType, float> _currentValues = new(7);
 
     private Matrix4x4 Matrix =>  Matrix4x4.Translate(reference) * Matrix4x4.Scale(scale);
 
@@ -39,5 +39,11 @@ public partial class TrailController : MonoBehaviour
             _currentValues.Add(type, value);
         else
             _currentValues[type] = value;
+    }
+
+    public void SetSpeed(float value)
+    {
+        speed = value;
+        TrailRenderer.time = 2 * Mathf.PI / value;
     }
 }

@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 namespace Lissajous
 {
-    [RequireComponent(typeof(LissajousParamSlider))]
+    [RequireComponent(typeof(Slider))]
     public class LissajousParamSlider : MonoBehaviour
     {
         public LissajousParamType lissajousParamType;
@@ -27,7 +27,7 @@ namespace Lissajous
         {
             ValueChanged?.Invoke((lissajousParamType, v));
             _valueText.text = $"{v:0.00}";
-            if (lissajousParamType is LissajousParamType.Phi || lissajousParamType is LissajousParamType.Psi)
+            if (lissajousParamType is LissajousParamType.Phi or LissajousParamType.Psi)
                 _valueText.text += "π";
         }
 
