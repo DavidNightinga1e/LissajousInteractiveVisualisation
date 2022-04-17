@@ -5,6 +5,9 @@ using UnityEngine;
 public class TrailController : MonoBehaviour
 {
     public TrailRenderer TrailRenderer;
+    public TrailRenderer XTrailRenderer;
+    public TrailRenderer YTrailRenderer;
+    public TrailRenderer ZTrailRenderer;
 
     public Vector3 reference;
     public Vector3 scale;
@@ -23,6 +26,9 @@ public class TrailController : MonoBehaviour
         var point = GetLissajous(_time);
         var newPoint = Matrix.MultiplyPoint3x4(point);
         TrailRenderer.transform.position = newPoint;
+        XTrailRenderer.transform.position = Matrix.MultiplyPoint3x4(new Vector3(-1, point.y, point.z));
+        YTrailRenderer.transform.position = Matrix.MultiplyPoint3x4(new Vector3(point.x, -1, point.z));
+        ZTrailRenderer.transform.position = Matrix.MultiplyPoint3x4(new Vector3(point.x, point.y, -1));
     }
 
     private Vector3 GetLissajous(float t)
@@ -44,6 +50,10 @@ public class TrailController : MonoBehaviour
     public void SetSpeed(float value)
     {
         speed = value;
-        TrailRenderer.time = 2 * Mathf.PI / value;
+        var trailRendererTime = 2 * Mathf.PI / value;
+        TrailRenderer.time = trailRendererTime;
+        XTrailRenderer.time = trailRendererTime;
+        YTrailRenderer.time = trailRendererTime;
+        ZTrailRenderer.time = trailRendererTime;
     }
 }
